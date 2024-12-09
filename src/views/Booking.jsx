@@ -1,27 +1,27 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Booking.scss";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Booking.scss';
 
-import BookingInfo from "../components/BookingInfo/BookingInfo";
-import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
-import Navigation from "../components/Navigation/Navigation";
-import Shoes from "../components/Shoes/Shoes";
-import Top from "../components/Top/Top";
+import BookingInfo from '../components/BookingInfo/BookingInfo';
+import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
+import Navigation from '../components/Navigation/Navigation';
+import Shoes from '../components/Shoes/Shoes';
+import Top from '../components/Top/Top';
 
 function Booking() {
   const [booking, setBooking] = useState({
-    when: "",
-    time: "",
+    when: '',
+    time: '',
     lanes: 0,
     people: 0,
   });
   const [shoes, setShoes] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   function updateBookingDetails(event) {
     const { name, value } = event.target;
-    setError("");
+    setError('');
 
     setBooking((prevState) => ({
       ...prevState,
@@ -31,7 +31,7 @@ function Booking() {
 
   function updateSize(event) {
     const { value, name } = event.target;
-    setError("");
+    setError('');
 
     if (value.length === 2 || value.length === 0) {
       setShoes((prevState) =>
@@ -43,13 +43,13 @@ function Booking() {
   }
 
   function addShoe(name) {
-    setError("");
+    setError('');
 
-    setShoes([...shoes, { id: name, size: "" }]);
+    setShoes([...shoes, { id: name, size: '' }]);
   }
 
   function removeShoe(name) {
-    setError("");
+    setError('');
 
     setShoes(shoes.filter((shoe) => shoe.id !== name));
   }
@@ -73,11 +73,11 @@ function Booking() {
 
   async function sendBooking(bookingInfo) {
     const response = await fetch(
-      "https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com",
+      'https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "x-api-key": "738c6b9d-24cf-47c3-b688-f4f4c5747662",
+          'x-api-key': '738c6b9d-24cf-47c3-b688-f4f4c5747662',
         },
         body: JSON.stringify(bookingInfo),
       }
@@ -93,23 +93,23 @@ function Booking() {
 
   function saveConfirmation(confirmation) {
     return new Promise((resolve) => {
-      sessionStorage.setItem("confirmation", JSON.stringify(confirmation));
+      sessionStorage.setItem('confirmation', JSON.stringify(confirmation));
 
       resolve();
     });
   }
 
   async function book() {
-    let errorMessage = "";
+    let errorMessage = '';
 
     if (!booking.when || !booking.lanes || !booking.time || !booking.people) {
-      errorMessage = "Alla fälten måste vara ifyllda";
+      errorMessage = 'Alla fälten måste vara ifyllda';
     } else if (!comparePeopleAndShoes()) {
-      errorMessage = "Antalet skor måste stämma överens med antal spelare";
+      errorMessage = 'Antalet skor måste stämma överens med antal spelare';
     } else if (!isShoeSizesFilled()) {
-      errorMessage = "Alla skor måste vara ifyllda";
+      errorMessage = 'Alla skor måste vara ifyllda';
     } else if (!checkPlayersAndLanes()) {
-      errorMessage = "Det får max vara 4 spelare per bana";
+      errorMessage = 'Det får max vara 4 spelare per bana';
     }
 
     // Om det finns något fel, sätt error och avsluta funktionen
@@ -132,7 +132,7 @@ function Booking() {
     const confirmation = await sendBooking(bookingInfo);
     await saveConfirmation(confirmation);
 
-    navigate("/confirmation", {
+    navigate('/confirmation', {
       state: { confirmationDetails: confirmation },
     });
   }
@@ -151,7 +151,7 @@ function Booking() {
       <button className="button booking__button" onClick={book}>
         strIIIIIike!
       </button>
-      {error ? <ErrorMessage message={error} /> : ""}
+      {error ? <ErrorMessage message={error} /> : ''}
     </section>
   );
 }

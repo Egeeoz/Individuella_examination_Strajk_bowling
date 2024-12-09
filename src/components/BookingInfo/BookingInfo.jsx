@@ -1,6 +1,6 @@
-import "./BookingInfo.scss";
+import './BookingInfo.scss';
 
-import Input from "../Input/Input";
+import Input from '../Input/Input';
 
 function BookingInfo({ updateBookingDetails }) {
   return (
@@ -16,12 +16,14 @@ function BookingInfo({ updateBookingDetails }) {
             customClass="booking-info__date"
             name="when"
             handleChange={updateBookingDetails}
+            id="date"
           />
           <Input
             label="Time"
             type="time"
             name="time"
             handleChange={updateBookingDetails}
+            id="time"
           />
         </section>
         <Input
@@ -31,6 +33,7 @@ function BookingInfo({ updateBookingDetails }) {
           name="people"
           handleChange={updateBookingDetails}
           maxLength={2}
+          id="awesome-bowlers"
         />
         <Input
           label="Number of lanes"
@@ -39,6 +42,7 @@ function BookingInfo({ updateBookingDetails }) {
           name="lanes"
           handleChange={updateBookingDetails}
           maxLength={2}
+          id="lanes"
         />
       </form>
     </section>
