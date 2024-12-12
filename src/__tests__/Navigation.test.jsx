@@ -6,7 +6,7 @@ import { setupServer } from 'msw/node';
 import Booking from '../views/Booking';
 import Confirmation from '../views/Confirmation';
 
-// Setup MSW server
+// Setup server
 const server = setupServer(
   http.post('https://h5jbtjv6if.execute-api.eu-north-1.amazonaws.com', () => {
     return HttpResponse.json({
@@ -35,7 +35,6 @@ describe('Navigation functionality', () => {
       </BrowserRouter>
     );
 
-    // Complete booking form
     fireEvent.change(screen.getByLabelText(/date/i), {
       target: { value: '2024-12-24' },
     });
@@ -52,7 +51,6 @@ describe('Navigation functionality', () => {
       target: { value: '1' },
     });
 
-    // Add and fill shoe inputs
     for (let i = 0; i < 2; i++) {
       fireEvent.click(screen.getByText('+'));
     }
@@ -61,20 +59,16 @@ describe('Navigation functionality', () => {
       fireEvent.change(input, { target: { value: '42' } });
     });
 
-    // Submit booking
     fireEvent.click(screen.getByText(/strIIIIIike!/i));
 
-    // Verify navigation to confirmation page
     await waitFor(() => {
       expect(window.location.pathname).toBe('/confirmation');
     });
   });
 
   test('should show no booking message when confirmation page is empty', () => {
-    // Clear session storage
     sessionStorage.clear();
 
-    // Force window.location to confirmation
     window.history.pushState({}, '', '/confirmation');
 
     render(
@@ -83,7 +77,6 @@ describe('Navigation functionality', () => {
       </BrowserRouter>
     );
 
-    // The text seems to be "Inga bokning gjord!" based on your component
     expect(screen.getByText('Inga bokning gjord!')).toBeInTheDocument();
   });
 
@@ -118,7 +111,6 @@ test('should toggle navigation menu when clicking icon', () => {
     </BrowserRouter>
   );
 
-  // Use className instead of role to get the specific navigation icon
   const menuIcon = document.querySelector('.navigation__icon');
   fireEvent.click(menuIcon);
 
